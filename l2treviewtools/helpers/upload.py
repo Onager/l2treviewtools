@@ -27,20 +27,31 @@ class UploadHelper(cli.CLIHelper):
   """Codereview upload.py command helper."""
 
   _REVIEWERS_PER_PROJECT = {
-      u'plaso': frozenset([
-          u'jberggren@gmail.com',
-          u'joachim.metz@gmail.com',
-          u'onager@deerpie.com',
-          u'romaing@google.com'])}
+      u'dfdatetime':
+          frozenset([u'joachim.metz@gmail.com', u'onager@deerpie.com']),
+      u'dfkinds':
+          frozenset([u'joachim.metz@gmail.com', u'onager@deerpie.com']),
+      u'dfvfs':
+          frozenset([u'joachim.metz@gmail.com', u'onager@deerpie.com']),
+      u'dfwinreg':
+          frozenset([u'joachim.metz@gmail.com', u'onager@deerpie.com']),
+      u'dftimewolf':
+          frozenset([
+              u'jberggren@gmail.com', u'someguyiknow@google.com',
+              u'tomchop@gmail.com']),
+      u'l2tpreg':
+          frozenset([u'joachim.metz@gmail.com', u'onager@deerpie.com']),
+      u'plaso':
+          frozenset([
+              u'aaronp@gmail.com', u'jberggren@gmail.com',
+              u'joachim.metz@gmail.com', u'onager@deerpie.com',
+              u'romaing@google.com'])}
 
   _REVIEWERS_DEFAULT = frozenset([
-      u'jberggren@gmail.com',
-      u'joachim.metz@gmail.com',
-      u'onager@deerpie.com'])
+      u'jberggren@gmail.com', u'joachim.metz@gmail.com', u'onager@deerpie.com'])
 
   _REVIEWERS_CC = frozenset([
-      u'kiddi@kiddaland.net',
-      u'log2timeline-dev@googlegroups.com'])
+      u'kiddi@kiddaland.net', u'log2timeline-dev@googlegroups.com'])
 
   def __init__(self, email_address, no_browser=False):
     """Initializes a codereview helper.
@@ -67,8 +78,8 @@ class UploadHelper(cli.CLIHelper):
     Returns:
       str: email address of the reviewer that is used on codereview.
     """
-    reviewers = list(self._REVIEWERS_PER_PROJECT.get(
-        project_name, self._REVIEWERS_DEFAULT))
+    reviewers = list(
+        self._REVIEWERS_PER_PROJECT.get(project_name, self._REVIEWERS_DEFAULT))
 
     try:
       reviewers.remove(self._email_address)
@@ -89,8 +100,8 @@ class UploadHelper(cli.CLIHelper):
     Returns:
       str: comma separated email addresses.
     """
-    reviewers_cc = set(self._REVIEWERS_PER_PROJECT.get(
-        project_name, self._REVIEWERS_DEFAULT))
+    reviewers_cc = set(
+        self._REVIEWERS_PER_PROJECT.get(project_name, self._REVIEWERS_DEFAULT))
     reviewers_cc.update(self._REVIEWERS_CC)
 
     reviewers_cc.remove(reviewer)
@@ -172,8 +183,7 @@ class UploadHelper(cli.CLIHelper):
     codereview_url = b'https://codereview.appspot.com/{0!s}/close'.format(
         issue_number)
 
-    post_data = urllib_parse.urlencode({
-        u'xsrf_token': xsrf_token})
+    post_data = urllib_parse.urlencode({u'xsrf_token': xsrf_token})
 
     request = urllib_request.Request(codereview_url)
 
@@ -375,9 +385,8 @@ class UploadHelper(cli.CLIHelper):
     if self._no_browser:
       command = u'{0:s} --no_oauth2_webbrowser'.format(command)
 
-    command = (
-        u'{0:s} -i {1!s} -m "Code updated." -t "{2:s}" -y -- '
-        u'{3:s}').format(command, issue_number, description, diffbase)
+    command = (u'{0:s} -i {1!s} -m "Code updated." -t "{2:s}" -y -- '
+               u'{3:s}').format(command, issue_number, description, diffbase)
 
     if self._no_browser:
       print(

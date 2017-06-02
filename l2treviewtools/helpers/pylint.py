@@ -31,8 +31,9 @@ class PylintHelper(cli.CLIHelper):
         failed_filenames.append(filename)
 
     if failed_filenames:
-      print(u'\nFiles with linter errors:\n{0:s}\n'.format(
-          u'\n'.join(failed_filenames)))
+      print(
+          u'\nFiles with linter errors:\n{0:s}\n'.format(
+              u'\n'.join(failed_filenames)))
       return False
 
     return True

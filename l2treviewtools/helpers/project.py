@@ -15,22 +15,16 @@ class ProjectHelper(cli.CLIHelper):
   """
 
   _AUTHORS_FILE_HEADER = [
-      u'# Names should be added to this file with this pattern:',
-      u'#',
-      u'# For individuals:',
-      u'#   Name (email address)',
-      u'#',
-      u'# For organizations:',
-      u'#   Organization (fnmatch pattern)',
-      u'#',
-      u'# See python fnmatch module documentation for more information.',
-      u'',
+      u'# Names should be added to this file with this pattern:', u'#',
+      u'# For individuals:', u'#   Name (email address)', u'#',
+      u'# For organizations:', u'#   Organization (fnmatch pattern)', u'#',
+      u'# See python fnmatch module documentation for more information.', u'',
       u'Google Inc. (*@google.com)']
 
   SUPPORTED_PROJECTS = frozenset([
       u'artifacts', u'dfdatetime', u'dfkinds', u'dfvfs', u'dfwinreg',
-      u'dftimewolf', u'eccemotus', u'l2tdevtools', u'l2tdocs',
-      u'l2tpreg', u'l2treviewtools', u'plaso'])
+      u'dftimewolf', u'eccemotus', u'l2tdevtools', u'l2tdocs', u'l2tpreg',
+      u'l2treviewtools', u'plaso'])
 
   def __init__(self, script_path):
     """Initializes a project helper.
@@ -70,14 +64,13 @@ class ProjectHelper(cli.CLIHelper):
       if supported_project_name in project_name:
         return supported_project_name
 
-    raise ValueError(
-        u'Unsupported project name: {0:s}.'.format(project_name))
+    raise ValueError(u'Unsupported project name: {0:s}.'.format(project_name))
 
   def _ReadFileContents(self, path):
     """Reads the contents of a file.
 
     Args:
-      filename (str): path of the file.
+      path (str): path of the file.
 
     Returns:
       bytes: file content or None.
@@ -97,8 +90,7 @@ class ProjectHelper(cli.CLIHelper):
     try:
       file_contents = file_contents.decode(u'utf-8')
     except UnicodeDecodeError as exception:
-      logging.error(
-          u'Unable to read file with error: {0!s}'.format(exception))
+      logging.error(u'Unable to read file with error: {0!s}'.format(exception))
       return
 
     return file_contents
@@ -141,11 +133,8 @@ class ProjectHelper(cli.CLIHelper):
     dpkg_date = time.strftime(u'%a, %d %b %Y %H:%M:%S %z')
     dpkg_changelog_content = u'\n'.join([
         u'{0:s} ({1:s}-1) unstable; urgency=low'.format(
-            self.project_name, project_version),
-        u'',
-        u'  * Auto-generated',
-        u'',
-        u' -- {0:s}  {1:s}'.format(dpkg_maintainter, dpkg_date)])
+            self.project_name, project_version), u'', u'  * Auto-generated',
+        u'', u' -- {0:s}  {1:s}'.format(dpkg_maintainter, dpkg_date)])
 
     try:
       dpkg_changelog_content = dpkg_changelog_content.encode(u'utf-8')
@@ -187,8 +176,9 @@ class ProjectHelper(cli.CLIHelper):
       name, _, email_address = author[:-1].rpartition(u'(')
       if email_address in authors:
         if name != authors[email_address]:
-          logging.warning(u'Detected name mismatch for author: {0:d}.'.format(
-              email_address))
+          logging.warning(
+              u'Detected name mismatch for author: {0:d}.'.format(
+                  email_address))
         continue
 
       authors[email_address] = name
