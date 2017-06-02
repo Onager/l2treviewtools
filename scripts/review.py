@@ -22,57 +22,34 @@ def Main():
 
   # TODO: add option to directly pass code review issue number.
 
+  # yapf: disable
   argument_parser.add_argument(
-      u'--allfiles',
-      u'--all-files',
-      u'--all_files',
-      dest=u'all_files',
-      action=u'store_true',
-      default=False,
-      help=(
+      u'--allfiles', u'--all-files', u'--all_files', dest=u'all_files',
+      action=u'store_true', default=False, help=(
           u'Apply command to all files, currently only affects the lint '
           u'command.'))
 
   argument_parser.add_argument(
-      u'--diffbase',
-      dest=u'diffbase',
-      action=u'store',
-      type=str,
-      metavar=u'DIFFBASE',
-      default=u'upstream/master',
-      help=(
+      u'--diffbase', dest=u'diffbase', action=u'store', type=str,
+      metavar=u'DIFFBASE', default=u'upstream/master', help=(
           u'The diffbase the default is upstream/master. This options is used '
           u'to indicate to what "base" the code changes are relative to and '
           u'can be used to "chain" code reviews.'))
 
   argument_parser.add_argument(
-      u'--nobrowser',
-      u'--no-browser',
-      u'--no_browser',
-      dest=u'no_browser',
-      action=u'store_true',
-      default=False,
-      help=(
+      u'--nobrowser', u'--no-browser', u'--no_browser', dest=u'no_browser',
+      action=u'store_true', default=False, help=(
           u'Disable the functionality to use the webbrowser to get the OAuth '
           u'token should be disabled.'))
 
   argument_parser.add_argument(
-      u'--noconfirm',
-      u'--no-confirm',
-      u'--no_confirm',
-      dest=u'no_confirm',
-      action=u'store_true',
-      default=False,
-      help=(
+      u'--noconfirm', u'--no-confirm', u'--no_confirm', dest=u'no_confirm',
+      action=u'store_true', default=False, help=(
           u'Do not ask for confirmation apply defaults.\n'
           u'WARNING: only use this when you are familiar with the defaults.'))
 
   argument_parser.add_argument(
-      u'--offline',
-      dest=u'offline',
-      action=u'store_true',
-      default=False,
-      help=(
+      u'--offline', dest=u'offline', action=u'store_true', default=False, help=(
           u'The review script is running offline and any online check is '
           u'skipped.'))
 
@@ -82,10 +59,7 @@ def Main():
 
   # TODO: add this to help output.
   close_command_parser.add_argument(
-      u'branch',
-      action=u'store',
-      metavar=u'BRANCH',
-      default=None,
+      u'branch', action=u'store', metavar=u'BRANCH', default=None,
       help=u'name of the corresponding feature branch.')
 
   commands_parser.add_parser(u'create')
@@ -94,38 +68,30 @@ def Main():
 
   # TODO: add this to help output.
   merge_command_parser.add_argument(
-      u'codereview_issue_number',
-      action=u'store',
-      metavar=u'CODEREVIEW_ISSUE_NUMBER',
-      default=None,
+      u'codereview_issue_number', action=u'store',
+      metavar=u'CODEREVIEW_ISSUE_NUMBER', default=None,
       help=u'the codereview issue number to be merged.')
 
   # TODO: add this to help output.
   merge_command_parser.add_argument(
-      u'github_origin',
-      action=u'store',
-      metavar=u'GITHUB_ORIGIN',
-      default=None,
+      u'github_origin', action=u'store',
+      metavar=u'GITHUB_ORIGIN', default=None,
       help=u'the github origin to merged e.g. username:feature.')
 
   merge_edit_command_parser = commands_parser.add_parser(u'merge-edit')
 
   # TODO: add this to help output.
   merge_edit_command_parser.add_argument(
-      u'github_origin',
-      action=u'store',
-      metavar=u'GITHUB_ORIGIN',
-      default=None,
+      u'github_origin', action=u'store',
+      metavar=u'GITHUB_ORIGIN', default=None,
       help=u'the github origin to merged e.g. username:feature.')
 
   merge_edit_command_parser = commands_parser.add_parser(u'merge_edit')
 
   # TODO: add this to help output.
   merge_edit_command_parser.add_argument(
-      u'github_origin',
-      action=u'store',
-      metavar=u'GITHUB_ORIGIN',
-      default=None,
+      u'github_origin', action=u'store',
+      metavar=u'GITHUB_ORIGIN', default=None,
       help=u'the github origin to merged e.g. username:feature.')
 
   commands_parser.add_parser(u'lint')
@@ -137,19 +103,15 @@ def Main():
 
   # TODO: add this to help output.
   open_command_parser.add_argument(
-      u'codereview_issue_number',
-      action=u'store',
-      metavar=u'CODEREVIEW_ISSUE_NUMBER',
-      default=None,
+      u'codereview_issue_number', action=u'store',
+      metavar=u'CODEREVIEW_ISSUE_NUMBER', default=None,
       help=u'the codereview issue number to be opened.')
 
   # TODO: add this to help output.
   open_command_parser.add_argument(
-      u'branch',
-      action=u'store',
-      metavar=u'BRANCH',
-      default=None,
+      u'branch', action=u'store', metavar=u'BRANCH', default=None,
       help=u'name of the corresponding feature branch.')
+  # yapf: enable
 
   # TODO: add submit option?
 
@@ -195,10 +157,12 @@ def Main():
       print(u'Github origin value is missing.')
       print_help_on_error = True
 
-  if options.offline and options.command not in (u'lint', u'lint-test',
-                                                 u'lint_test', u'test'):
+  # yapf: disable
+  if options.offline and options.command not in (
+      u'lint', u'lint-test', u'lint_test', u'test'):
     print(u'Cannot run: {0:s} in offline mode.'.format(options.command))
     print_help_on_error = True
+  # yapf: enable
 
   if print_help_on_error:
     print(u'')
@@ -209,9 +173,8 @@ def Main():
   home_path = os.path.expanduser(u'~')
   netrc_path = os.path.join(home_path, u'.netrc')
   if not os.path.exists(netrc_path):
-    print(
-        u'{0:s} aborted - unable to find .netrc.'.format(
-            options.command.title()))
+    print(u'{0:s} aborted - unable to find .netrc.'.format(
+        options.command.title()))   # yapf: disable
     return False
 
   review_helper = ReviewHelper(

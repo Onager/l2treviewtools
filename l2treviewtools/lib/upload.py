@@ -15,6 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # pylint: skip-file
+# yapf: disable
 
 """Tool for uploading diffs from a version control system to the codereview app.
 
@@ -521,29 +522,29 @@ class HttpRpcServer(AbstractRpcServer):
 
 
 class CondensedHelpFormatter(optparse.IndentedHelpFormatter):
-   """Frees more horizontal space by removing indentation from group
+  """Frees more horizontal space by removing indentation from group
       options and collapsing arguments between short and long, e.g.
       '-o ARG, --opt=ARG' to -o --opt ARG"""
 
-   def format_heading(self, heading):
-     return "%s:\n" % heading
+  def format_heading(self, heading):
+    return "%s:\n" % heading
 
-   def format_option(self, option):
-     self.dedent()
-     res = optparse.HelpFormatter.format_option(self, option)
-     self.indent()
-     return res
+  def format_option(self, option):
+    self.dedent()
+    res = optparse.HelpFormatter.format_option(self, option)
+    self.indent()
+    return res
 
-   def format_option_strings(self, option):
-     self.set_long_opt_delimiter(" ")
-     optstr = optparse.HelpFormatter.format_option_strings(self, option)
-     optlist = optstr.split(", ")
-     if len(optlist) > 1:
-       if option.takes_value():
-         # strip METAVAR from all but the last option
-         optlist = [x.split()[0] for x in optlist[:-1]] + optlist[-1:]
-       optstr = " ".join(optlist)
-     return optstr
+  def format_option_strings(self, option):
+    self.set_long_opt_delimiter(" ")
+    optstr = optparse.HelpFormatter.format_option_strings(self, option)
+    optlist = optstr.split(", ")
+    if len(optlist) > 1:
+      if option.takes_value():
+        # strip METAVAR from all but the last option
+        optlist = [x.split()[0] for x in optlist[:-1]] + optlist[-1:]
+      optstr = " ".join(optlist)
+    return optstr
 
 
 parser = optparse.OptionParser(
@@ -1227,21 +1228,21 @@ class SubversionVCS(VersionControlSystem):
     """
     url = self._GetInfo("URL")
     if url:
-        scheme, netloc, path, params, query, fragment = urlparse.urlparse(url)
-        guess = ""
-        # TODO(anatoli) - repository specific hacks should be handled by server
-        if netloc == "svn.python.org" and scheme == "svn+ssh":
-          path = "projects" + path
-          scheme = "http"
-          guess = "Python "
-        elif netloc.endswith(".googlecode.com"):
-          scheme = "http"
-          guess = "Google Code "
-        path = path + "/"
-        base = urlparse.urlunparse((scheme, netloc, path, params,
-                                    query, fragment))
-        logging.info("Guessed %sbase = %s", guess, base)
-        return base
+      scheme, netloc, path, params, query, fragment = urlparse.urlparse(url)
+      guess = ""
+      # TODO(anatoli) - repository specific hacks should be handled by server
+      if netloc == "svn.python.org" and scheme == "svn+ssh":
+        path = "projects" + path
+        scheme = "http"
+        guess = "Python "
+      elif netloc.endswith(".googlecode.com"):
+        scheme = "http"
+        guess = "Google Code "
+      path = path + "/"
+      base = urlparse.urlunparse((scheme, netloc, path, params,
+                                  query, fragment))
+      logging.info("Guessed %sbase = %s", guess, base)
+      return base
     if required:
       ErrorExit("Can't find URL in output from svn info")
     return None
@@ -1282,23 +1283,23 @@ class SubversionVCS(VersionControlSystem):
     # Mapping of keywords to known aliases
     svn_keywords = {
       # Standard keywords
-      'Date':                ['Date', 'LastChangedDate'],
-      'Revision':            ['Revision', 'LastChangedRevision', 'Rev'],
-      'Author':              ['Author', 'LastChangedBy'],
-      'HeadURL':             ['HeadURL', 'URL'],
-      'Id':                  ['Id'],
+      'Date': ['Date', 'LastChangedDate'],
+      'Revision': ['Revision', 'LastChangedRevision', 'Rev'],
+      'Author': ['Author', 'LastChangedBy'],
+      'HeadURL': ['HeadURL', 'URL'],
+      'Id': ['Id'],
 
       # Aliases
-      'LastChangedDate':     ['LastChangedDate', 'Date'],
+      'LastChangedDate': ['LastChangedDate', 'Date'],
       'LastChangedRevision': ['LastChangedRevision', 'Rev', 'Revision'],
-      'LastChangedBy':       ['LastChangedBy', 'Author'],
-      'URL':                 ['URL', 'HeadURL'],
+      'LastChangedBy': ['LastChangedBy', 'Author'],
+      'URL': ['URL', 'HeadURL'],
     }
 
     def repl(m):
-       if m.group(2):
-         return "$%s::%s$" % (m.group(1), " " * len(m.group(3)))
-       return "$%s$" % m.group(1)
+      if m.group(2):
+        return "$%s::%s$" % (m.group(1), " " * len(m.group(3)))
+      return "$%s$" % m.group(1)
     keywords = [keyword
                 for name in keyword_str.split(" ")
                 for keyword in svn_keywords.get(name, [])]
@@ -2041,7 +2042,7 @@ class PerforceVCS(VersionControlSystem):
       line_count = len(diffData.file_body.splitlines())
       diffData.change_summary = "@@ -0,0 +1"
       if line_count > 1:
-          diffData.change_summary += ",%d" % line_count
+        diffData.change_summary += ",%d" % line_count
       diffData.change_summary += " @@"
       diffData.prefix = "+"
       return diffData

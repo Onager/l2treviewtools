@@ -14,12 +14,19 @@ class ProjectHelper(cli.CLIHelper):
     project_name (str): name of the project.
   """
 
+
   _AUTHORS_FILE_HEADER = [
-      u'# Names should be added to this file with this pattern:', u'#',
-      u'# For individuals:', u'#   Name (email address)', u'#',
-      u'# For organizations:', u'#   Organization (fnmatch pattern)', u'#',
-      u'# See python fnmatch module documentation for more information.', u'',
-      u'Google Inc. (*@google.com)']
+      u'# Names should be added to this file with this pattern:',
+      u'#',
+      u'# For individuals:',
+      u'#   Name (email address)',
+      u'#',
+      u'# For organizations:',
+      u'#   Organization (fnmatch pattern)',
+      u'#',
+      u'# See python fnmatch module documentation for more information.',
+      u'',
+      u'Google Inc. (*@google.com)'] # yapf: disable
 
   SUPPORTED_PROJECTS = frozenset([
       u'artifacts', u'dfdatetime', u'dfkinds', u'dfvfs', u'dfwinreg',
@@ -133,8 +140,11 @@ class ProjectHelper(cli.CLIHelper):
     dpkg_date = time.strftime(u'%a, %d %b %Y %H:%M:%S %z')
     dpkg_changelog_content = u'\n'.join([
         u'{0:s} ({1:s}-1) unstable; urgency=low'.format(
-            self.project_name, project_version), u'', u'  * Auto-generated',
-        u'', u' -- {0:s}  {1:s}'.format(dpkg_maintainter, dpkg_date)])
+            self.project_name, project_version),
+        u'',
+        u'  * Auto-generated',
+        u'',
+        u' -- {0:s}  {1:s}'.format(dpkg_maintainter, dpkg_date)]) #yapf: disable
 
     try:
       dpkg_changelog_content = dpkg_changelog_content.encode(u'utf-8')
