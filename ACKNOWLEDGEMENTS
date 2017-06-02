@@ -1,0 +1,13 @@
+Acknowledgements: l2treviewtools
+
+Copyright (C) 2012, Log2Timeline maintainers <log2timeline-maintainers@googlegroups.com>
+Please see the AUTHORS file for details on individual authors.
+
+l2treviewtools is a set of tools for conducting code reviews using the log2timeline project code review workflow.
+
+l2treviewtools is currently developed and maintained by:
+* Daniel White
+* Joachim Metz
+
+l2treviewtools depends on various other projects. So thanks to the authors and others
+involved with these projects.

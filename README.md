@@ -1,2 +1,2 @@
 # l2treviewtools
-Tools for conducting code reviews in the log2timeline project
+Tools for conducting code reviews according in the log2timeline project workflow.
