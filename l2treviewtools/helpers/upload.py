@@ -19,8 +19,8 @@ else:
   import urllib.request as urllib_request
 
 # pylint: disable=wrong-import-position
-from l2treviewtools import lib as upload_tool
 from l2treviewtools.helpers import cli
+from l2treviewtools.lib import upload as upload_tool
 
 
 class UploadHelper(cli.CLIHelper):
