@@ -8,19 +8,17 @@ import os
 import random
 import sys
 
-# pylint: disable=import-error
-# pylint: disable=no-name-in-module
+# pylint: disable=import-error,no-name-in-module
 if sys.version_info[0] < 3:
-  # Use urllib2 here since this code should be able to be used by a default
-  # Python set up. Otherwise usage of requests is preferred.
-  import urllib as  urllib_parse
   import urllib2 as urllib_error
+  import urllib as  urllib_parse
   import urllib2 as urllib_request
 else:
   import urllib.error as urllib_error
   import urllib.parse as urllib_parse
   import urllib.request as urllib_request
 
+# pylint: disable=wrong-import-position
 from l2treviewtools import lib as upload_tool
 from l2treviewtools.helpers import cli
 

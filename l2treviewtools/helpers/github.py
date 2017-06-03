@@ -1,9 +1,17 @@
 # -*- coding: utf-8 -*-
 """Helper for interacting with GitHub."""
+
 import json
 import logging
-import urllib2 as urllib_error
-import urllib2 as urllib_request
+import sys
+
+# pylint: disable=import-error,no-name-in-module
+if sys.version_info[0] < 3:
+  import urllib2 as urllib_error
+  import urllib2 as urllib_request
+else:
+  import urllib.error as urllib_error
+  import urllib.request as urllib_request
 
 
 class GitHubHelper(object):

@@ -10,17 +10,17 @@ class CLIHelperTest(unittest.TestCase):
 
   def testRunCommand(self):
     """Tests that the helper can be initialized."""
-    mock_responses = {u'echo hi': [0, 'hi\n', '']}
+    mock_responses = {u'echo hi': [0, b'hi\n', b'']}
     test_helper = cli_helper.CLIHelper(mock_responses=mock_responses)
     with self.assertRaises(AttributeError):
       test_helper.RunCommand(u'echo hello')
     exit_code, stdout, stderr = test_helper.RunCommand(u'echo hi')
     self.assertEqual(exit_code, 0)
-    self.assertEqual(stdout, 'hi\n')
-    self.assertEqual(stderr, '')
+    self.assertEqual(stdout, b'hi\n')
+    self.assertEqual(stderr, b'')
 
     real_helper = cli_helper.CLIHelper()
     exit_code, stdout, stderr = real_helper.RunCommand(u'echo hello')
     self.assertEqual(exit_code, 0)
-    self.assertEqual(stdout, 'hello\n')
-    self.assertEqual(stderr, '')
+    self.assertEqual(stdout, b'hello\n')
+    self.assertEqual(stderr, b'')

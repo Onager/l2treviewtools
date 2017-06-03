@@ -1,0 +1,29 @@
+Source: l2treviewtools
+Section: python
+Priority: extra
+Maintainer: Log2Timeline maintainers <log2timeline-maintainers@googlegroups.com>
+Build-Depends: debhelper (>= 7), python-all (>= 2.7~), python-setuptools, python3-all (>= 3.4~), python3-setuptools
+Standards-Version: 3.9.5
+X-Python-Version: >= 2.7
+X-Python3-Version: >= 3.4
+Homepage: https://github.com/log2timeline/l2treviewtools
+
+Package: python-l2treviewtools
+Architecture: all
+Depends: ${python:Depends}, ${misc:Depends}
+Description: Python 2 module of log2reviewtools
+ l2treviewtools, provides tools for conducting code reviews in '
+ the log2timeline projects.
+
+Package: python3-l2treviewtools
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}
+Description: Python 3 module of log2reviewtools
+ l2treviewtools, provides tools for conducting code reviews in '
+ the log2timeline projects.
+
+Package: l2treviewtools-tools
+Architecture: all
+Depends: python-l2treviewtools, python (>= 2.7~), ${python:Depends}, ${misc:Depends}
+Description: tools for code reviews in log2timeline projects l2treviewtools, provides tools for conducting code reviews in '
+ the log2timeline projects.
