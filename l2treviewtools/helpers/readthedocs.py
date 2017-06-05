@@ -43,8 +43,7 @@ class ReadTheDocsHelper(object):
       url_object = urllib_request.urlopen(request)
     except urllib_error.HTTPError as exception:
       logging.error(
-          u'Failed triggering build with error: {0!s}'.format(
-              exception))
+          u'Failed triggering build with error: {0!s}'.format(exception))
       return False
 
     if url_object.code != 200:

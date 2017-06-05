@@ -8,7 +8,7 @@ from l2treviewtools.helpers import cli
 class PylintHelper(cli.CLIHelper):
   """Pylint helper."""
 
-  _MINIMUM_VERSION_TUPLE = (1, 5, 0)
+  _MINIMUM_VERSION_TUPLE = (1, 6, 5)
 
   def CheckFiles(self, filenames):
     """Checks if the linting of the files is correct using pylint.
@@ -31,8 +31,9 @@ class PylintHelper(cli.CLIHelper):
         failed_filenames.append(filename)
 
     if failed_filenames:
-      print(u'\nFiles with linter errors:\n{0:s}\n'.format(
-          u'\n'.join(failed_filenames)))
+      print(u'\nFiles with linter errors:')
+      for failed_filename in filenames:
+        print(u'\t{0:s}'.format(failed_filename))
       return False
 
     return True

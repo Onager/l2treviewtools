@@ -326,8 +326,7 @@ class GitHelper(cli.CLIHelper):
     if exit_code != 0:
       return False
 
-    exit_code, _, _ = self.RunCommand(
-        u'git pull --no-edit origin master')
+    exit_code, _, _ = self.RunCommand(u'git pull --no-edit origin master')
 
     return exit_code == 0
 

@@ -15,6 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # pylint: skip-file
+# yapf: disable
 
 """Tool for uploading diffs from a version control system to the codereview app.
 

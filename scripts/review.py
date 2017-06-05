@@ -22,6 +22,7 @@ def Main():
 
   # TODO: add option to directly pass code review issue number.
 
+  # yapf: disable
   argument_parser.add_argument(
       u'--allfiles', u'--all-files', u'--all_files', dest=u'all_files',
       action=u'store_true', default=False, help=(
@@ -110,6 +111,7 @@ def Main():
   open_command_parser.add_argument(
       u'branch', action=u'store', metavar=u'BRANCH', default=None,
       help=u'name of the corresponding feature branch.')
+  # yapf: enable
 
   # TODO: add submit option?
 
@@ -144,8 +146,7 @@ def Main():
         _, _, feature_branch = feature_branch.rpartition(u':')
 
   if options.command in (u'merge', u'open'):
-    codereview_issue_number = getattr(
-        options, u'codereview_issue_number', None)
+    codereview_issue_number = getattr(options, u'codereview_issue_number', None)
     if not codereview_issue_number:
       print(u'Codereview issue number value is missing.')
       print_help_on_error = True
@@ -156,10 +157,12 @@ def Main():
       print(u'Github origin value is missing.')
       print_help_on_error = True
 
+  # yapf: disable
   if options.offline and options.command not in (
       u'lint', u'lint-test', u'lint_test', u'test'):
     print(u'Cannot run: {0:s} in offline mode.'.format(options.command))
     print_help_on_error = True
+  # yapf: enable
 
   if print_help_on_error:
     print(u'')
@@ -171,13 +174,17 @@ def Main():
   netrc_path = os.path.join(home_path, u'.netrc')
   if not os.path.exists(netrc_path):
     print(u'{0:s} aborted - unable to find .netrc.'.format(
-        options.command.title()))
+        options.command.title()))  # yapf: disable
     return False
 
   review_helper = ReviewHelper(
-      options.command, github_origin, feature_branch,
-      options.diffbase, all_files=options.all_files,
-      no_browser=options.no_browser, no_confirm=options.no_confirm)
+      options.command,
+      github_origin,
+      feature_branch,
+      options.diffbase,
+      all_files=options.all_files,
+      no_browser=options.no_browser,
+      no_confirm=options.no_confirm)
 
   if not review_helper.InitializeHelpers():
     return False

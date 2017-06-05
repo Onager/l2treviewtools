@@ -23,12 +23,12 @@ class ReviewHelper(object):
   """Defines review helper functions."""
 
   _PROJECT_NAME_PREFIX_REGEX = re.compile(
-      r'\[({0:s})\] '.format(u'|'.join(
-          project.ProjectHelper.SUPPORTED_PROJECTS)))
+      r'\[({0:s})\] '.format(
+          u'|'.join(project.ProjectHelper.SUPPORTED_PROJECTS)))
 
   def __init__(
       self, command, github_origin, feature_branch, diffbase, all_files=False,
-      no_browser=False, no_confirm=False):
+      no_browser=False, no_confirm=False):  # yapf: disable
     """Initializes a review helper.
 
     Args:
@@ -68,6 +68,7 @@ class ReviewHelper(object):
       self._fork_username, _, self._fork_feature_branch = (
           self._github_origin.partition(u':'))
 
+  # yapf: disable
   def CheckLocalGitState(self):
     """Checks the state of the local git repository.
 
@@ -115,7 +116,9 @@ class ReviewHelper(object):
         self._active_branch = u'master'
 
     return True
+  # yapf: enable
 
+  # yapf: disable
   def CheckRemoteGitState(self):
     """Checks the state of the remote git repository.
 
@@ -152,12 +155,13 @@ class ReviewHelper(object):
 
     elif self._command == u'merge':
       if not self._git_helper.SynchronizeWithOrigin():
-        print((
-            u'{0:s} aborted - unable to synchronize with '
-            u'origin/master.').format(self._command.title()))
+        print(
+            (u'{0:s} aborted - unable to synchronize with '
+             u'origin/master.').format(self._command.title()))
         return False
 
     return True
+  # yapf: enable
 
   def Close(self):
     """Closes a review.
@@ -173,7 +177,7 @@ class ReviewHelper(object):
     review_file = reviewfile.ReviewFile(self._feature_branch)
     if not review_file.Exists():
       print(u'Review file missing for branch: {0:s}'.format(
-          self._feature_branch))
+          self._feature_branch))  # yapf: disable
 
     else:
       codereview_issue_number = review_file.GetCodeReviewIssueNumber()
@@ -183,7 +187,7 @@ class ReviewHelper(object):
       if codereview_issue_number:
         if not self._codereview_helper.CloseIssue(codereview_issue_number):
           print(u'Unable to close code review: {0!s}'.format(
-              codereview_issue_number))
+              codereview_issue_number))  # yapf: disable
           print((
               u'Close it manually on: https://codereview.appspot.com/'
               u'{0!s}').format(codereview_issue_number))
@@ -196,6 +200,7 @@ class ReviewHelper(object):
     Returns:
       bool: True if the create was successful.
     """
+    # yapf: disable
     review_file = reviewfile.ReviewFile(self._active_branch)
     if review_file.Exists():
       print(u'Review file already exists for branch: {0:s}'.format(
@@ -261,6 +266,7 @@ class ReviewHelper(object):
         description):
       print(u'Unable to create pull request.')
 
+    # yapf: enable
     return True
 
   def InitializeHelpers(self):
@@ -276,7 +282,7 @@ class ReviewHelper(object):
     self._project_name = self._project_helper.project_name
     if not self._project_name:
       print(u'{0:s} aborted - unable to determine project name.'.format(
-          self._command.title()))
+          self._command.title()))  # yapf: disable
       return False
 
     self._git_repo_url = b'https://github.com/log2timeline/{0:s}.git'.format(
@@ -306,6 +312,7 @@ class ReviewHelper(object):
 
     return True
 
+  # yapf: disable
   def Lint(self):
     """Lints a review.
 
@@ -344,6 +351,7 @@ class ReviewHelper(object):
       return False
 
     return True
+  # yapf: enable
 
   def Merge(self, codereview_issue_number):
     """Merges a review.
@@ -385,8 +393,8 @@ class ReviewHelper(object):
     commit_message = (
         u'Changes have been merged with master branch. '
         u'To close the review and clean up the feature branch you can run: '
-        u'python ./utils/review.py close {0:s}').format(
-            self._fork_feature_branch)
+        u'python ./utils/review.py close {0:s}'
+    ).format(self._fork_feature_branch)
     self._codereview_helper.AddMergeMessage(
         codereview_issue_number, commit_message)
 
@@ -433,8 +441,7 @@ class ReviewHelper(object):
     if not self._merge_description:
       print((
           u'{0:s} aborted - unable to determine description of code review: '
-          u'{1!s}.').format(
-              self._command.title(), codereview_issue_number))
+          u'{1!s}.').format(self._command.title(), codereview_issue_number))
       return False
 
     # When merging remove the project name ("[project]") prefix from
@@ -450,13 +457,11 @@ class ReviewHelper(object):
               self._command.title(), codereview_issue_number))
       return False
 
-    github_user_information = self._github_helper.QueryUser(
-        self._fork_username)
+    github_user_information = self._github_helper.QueryUser(self._fork_username)
     if not github_user_information:
       print((
           u'{0:s} aborted - unable to retrieve github user: {1:s} '
-          u'information.').format(
-              self._command.title(), self._fork_username))
+          u'information.').format(self._command.title(), self._fork_username))
       return False
 
     merge_fullname = github_user_information.get(u'name', None)
@@ -467,7 +472,7 @@ class ReviewHelper(object):
     if not merge_fullname:
       print((
           u'{0:s} aborted - unable to determine full name.').format(
-              self._command.title()))
+              self._command.title()))  # yapf: disable
       return False
 
     self._merge_author = u'{0:s} <{1:s}>'.format(
@@ -484,14 +489,17 @@ class ReviewHelper(object):
     fork_git_repo_url = self._github_helper.GetForkGitRepoUrl(
         self._fork_username)
 
+    # yapf: disable
     if not self._git_helper.PullFromFork(
         fork_git_repo_url, self._fork_feature_branch):
       print(u'{0:s} aborted - unable to pull changes from fork.'.format(
           self._command.title()))
       return False
+    # yapf: enable
 
     return True
 
+  # yapf: disable
   def Test(self):
     """Tests a review.
 
@@ -519,6 +527,8 @@ class ReviewHelper(object):
 
     return True
 
+  # yapf: enable
+
   def Update(self):
     """Updates a review.
 
@@ -528,7 +538,7 @@ class ReviewHelper(object):
     review_file = reviewfile.ReviewFile(self._active_branch)
     if not review_file.Exists():
       print(u'Review file missing for branch: {0:s}'.format(
-          self._active_branch))
+          self._active_branch))  # yapf: disable
       return False
 
     codereview_issue_number = review_file.GetCodeReviewIssueNumber()
@@ -552,9 +562,9 @@ class ReviewHelper(object):
       description = user_input
 
     if not self._codereview_helper.UpdateIssue(
-        codereview_issue_number, self._diffbase, description):
+        codereview_issue_number, self._diffbase, description):   # yapf: disable
       print(u'Unable to update code review: {0!s}'.format(
-          codereview_issue_number))
+          codereview_issue_number))  # yapf: disable
       return False
 
     return True
