@@ -174,7 +174,7 @@ def Main():
   netrc_path = os.path.join(home_path, u'.netrc')
   if not os.path.exists(netrc_path):
     print(u'{0:s} aborted - unable to find .netrc.'.format(
-        options.command.title()))   # yapf: disable
+        options.command.title()))  # yapf: disable
     return False
 
   review_helper = ReviewHelper(
