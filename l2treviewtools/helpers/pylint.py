@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Helper for interacting with pylint."""
 from __future__ import print_function
+import subprocess
 
 from l2treviewtools.helpers import cli
 
@@ -8,7 +9,9 @@ from l2treviewtools.helpers import cli
 class PylintHelper(cli.CLIHelper):
   """Pylint helper."""
 
-  _MINIMUM_VERSION_TUPLE = (1, 6, 5)
+  MINIMUM_VERSION = u'1.6.5'
+
+  _MINIMUM_VERSION_TUPLE = MINIMUM_VERSION.split(u'.')
 
   def CheckFiles(self, filenames):
     """Checks if the linting of the files is correct using pylint.
@@ -25,9 +28,8 @@ class PylintHelper(cli.CLIHelper):
       print(u'Checking: {0:s}'.format(filename))
 
       command = u'pylint --rcfile=utils/pylintrc {0:s}'.format(filename)
-      exit_code, output, _ = self.RunCommand(command)
+      exit_code = subprocess.call(command, shell=True)
       if exit_code != 0:
-        print(output)
         failed_filenames.append(filename)
 
     if failed_filenames:

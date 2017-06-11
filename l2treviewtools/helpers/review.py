@@ -306,7 +306,7 @@ class ReviewHelper(object):
       # sphinx-apidoc 1.2.3 or later is introduced.
       # if not self._sphinxapidoc_helper.CheckUpToDateVersion():
       #   print((
-      #       u'{0:s} aborted - sphinx-apidoc verion 1.2.0 or later '
+      #       u'{0:s} aborted - sphinx-apidoc version 1.2.0 or later '
       #       u'required.').format(self._command.title()))
       #   return False
 
@@ -328,8 +328,8 @@ class ReviewHelper(object):
 
     pylint_helper = pylint.PylintHelper()
     if not pylint_helper.CheckUpToDateVersion():
-      print(u'{0:s} aborted - pylint verion 1.5.0 or later required.'.format(
-          self._command.title()))
+      print(u'{0:s} aborted - pylint version {1:s} or later required.'.format(
+          self._command.title(), pylint.PylintHelper.MINIMUM_VERSION))
       return False
 
     if self._all_files:

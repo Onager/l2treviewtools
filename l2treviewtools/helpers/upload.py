@@ -26,32 +26,45 @@ from l2treviewtools.lib import upload as upload_tool
 class UploadHelper(cli.CLIHelper):
   """Codereview upload.py command helper."""
 
+  # yapf: disable
+
   _REVIEWERS_PER_PROJECT = {
-      u'dfdatetime':
-          frozenset([u'joachim.metz@gmail.com', u'onager@deerpie.com']),
-      u'dfkinds':
-          frozenset([u'joachim.metz@gmail.com', u'onager@deerpie.com']),
-      u'dfvfs':
-          frozenset([u'joachim.metz@gmail.com', u'onager@deerpie.com']),
-      u'dfwinreg':
-          frozenset([u'joachim.metz@gmail.com', u'onager@deerpie.com']),
-      u'dftimewolf':
-          frozenset([
-              u'jberggren@gmail.com', u'someguyiknow@google.com',
-              u'tomchop@gmail.com']),
-      u'l2tpreg':
-          frozenset([u'joachim.metz@gmail.com', u'onager@deerpie.com']),
-      u'plaso':
-          frozenset([
-              u'aaronp@gmail.com', u'jberggren@gmail.com',
-              u'joachim.metz@gmail.com', u'onager@deerpie.com',
-              u'romaing@google.com'])}
+      u'dfdatetime': frozenset([
+          u'joachim.metz@gmail.com',
+          u'onager@deerpie.com']),
+      u'dfkinds': frozenset([
+          u'joachim.metz@gmail.com',
+          u'onager@deerpie.com']),
+      u'dfvfs': frozenset([
+          u'joachim.metz@gmail.com',
+          u'onager@deerpie.com']),
+      u'dfwinreg': frozenset([
+          u'joachim.metz@gmail.com',
+          u'onager@deerpie.com']),
+      u'dftimewolf': frozenset([
+          u'jberggren@gmail.com',
+          u'someguyiknow@google.com',
+          u'tomchop@gmail.com']),
+      u'l2tpreg': frozenset([
+          u'joachim.metz@gmail.com',
+          u'onager@deerpie.com']),
+      u'plaso': frozenset([
+          u'aaronp@gmail.com',
+          u'jberggren@gmail.com',
+          u'joachim.metz@gmail.com',
+          u'onager@deerpie.com',
+          u'romaing@google.com'])}
 
   _REVIEWERS_DEFAULT = frozenset([
-      u'jberggren@gmail.com', u'joachim.metz@gmail.com', u'onager@deerpie.com'])
+      u'jberggren@gmail.com',
+      u'joachim.metz@gmail.com',
+      u'onager@deerpie.com'])
 
   _REVIEWERS_CC = frozenset([
-      u'kiddi@kiddaland.net', u'log2timeline-dev@googlegroups.com'])
+      u'kiddi@kiddaland.net',
+      u'log2timeline-dev@googlegroups.com'])
+
+  # yapf: enable
 
   def __init__(self, email_address, no_browser=False):
     """Initializes a codereview helper.

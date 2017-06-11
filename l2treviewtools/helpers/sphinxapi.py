@@ -6,7 +6,7 @@ from l2treviewtools.helpers import cli
 
 
 class SphinxAPIDocHelper(cli.CLIHelper):
-  """Defines sphinx-apidoc helper functions."""
+  """Sphinx-apidoc helper functions."""
 
   _MINIMUM_VERSION_TUPLE = (1, 2, 0)
 

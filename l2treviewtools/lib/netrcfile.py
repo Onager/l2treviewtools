@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Implementation of a NetRC file."""
+"""Implementation of a net resources file."""
 import os
 import re
 
 
 class NetRCFile(object):
-  """Defines a .netrc file."""
+  """Net resources (.netrc) file."""
 
   _NETRC_SEPARATOR_RE = re.compile(r'[^ \t\n]+')
 
