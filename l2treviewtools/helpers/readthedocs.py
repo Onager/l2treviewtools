@@ -2,15 +2,9 @@
 """Helper for interacting with readthedocs."""
 
 import logging
-import sys
 
-# pylint: disable=import-error,no-name-in-module
-if sys.version_info[0] < 3:
-  import urllib2 as urllib_error
-  import urllib2 as urllib_request
-else:
-  import urllib.error as urllib_error
-  import urllib.request as urllib_request
+from l2treviewtools.helpers import url_lib
+from l2treviewtools.lib import errors
 
 
 class ReadTheDocsHelper(object):
@@ -24,6 +18,7 @@ class ReadTheDocsHelper(object):
     """
     super(ReadTheDocsHelper, self).__init__()
     self._project = project
+    self._url_lib_helper = url_lib.URLLibHelper()
 
   def TriggerBuild(self):
     """Triggers readthedocs to build the docs of the project.
@@ -34,22 +29,11 @@ class ReadTheDocsHelper(object):
     readthedocs_url = u'https://readthedocs.org/build/{0:s}'.format(
         self._project)
 
-    request = urllib_request.Request(readthedocs_url)
-
-    # This will change the request into a POST.
-    request.add_data(b'')
-
     try:
-      url_object = urllib_request.urlopen(request)
-    except urllib_error.HTTPError as exception:
-      logging.error(
-          u'Failed triggering build with error: {0!s}'.format(exception))
-      return False
+      self._url_lib_helper.Request(readthedocs_url, post_data=b'')
 
-    if url_object.code != 200:
-      logging.error(
-          u'Failed triggering build with status code: {0:d}'.format(
-              url_object.code))
+    except errors.ConnectionError as exception:
+      logging.warning(u'{0!s}'.format(exception))
       return False
 
     return True

@@ -3,15 +3,9 @@
 
 import json
 import logging
-import sys
 
-# pylint: disable=import-error,no-name-in-module
-if sys.version_info[0] < 3:
-  import urllib2 as urllib_error
-  import urllib2 as urllib_request
-else:
-  import urllib.error as urllib_error
-  import urllib.request as urllib_request
+from l2treviewtools.helpers import url_lib
+from l2treviewtools.lib import errors
 
 
 class GitHubHelper(object):
@@ -27,6 +21,7 @@ class GitHubHelper(object):
     super(GitHubHelper, self).__init__()
     self._organization = organization
     self._project = project
+    self._url_lib_helper = url_lib.URLLibHelper()
 
   def CreatePullRequest(
       self, access_token, codereview_issue_number, origin, description):
@@ -61,23 +56,11 @@ class GitHubHelper(object):
         u'access_token={2:s}').format(
             self._organization, self._project, access_token)
 
-    request = urllib_request.Request(github_url)
-
-    # This will change the request into a POST.
-    request.add_data(post_data)
-
     try:
-      url_object = urllib_request.urlopen(request)
-    except urllib_error.HTTPError as exception:
-      logging.error(
-          u'Failed creating pull request: {0!s} with error: {1!s}'.format(
-              codereview_issue_number, exception))
-      return False
+      self._url_lib_helper.Request(github_url, post_data=post_data)
 
-    if url_object.code not in (200, 201):
-      logging.error(
-          u'Failed creating pull request: {0!s} with status code: {1:d}'.format(
-              codereview_issue_number, url_object.code))
+    except errors.ConnectionError as exception:
+      logging.warning(u'{0!s}'.format(exception))
       return False
 
     return True
@@ -104,21 +87,12 @@ class GitHubHelper(object):
     """
     github_url = b'https://api.github.com/users/{0:s}'.format(username)
 
-    request = urllib_request.Request(github_url)
-
     try:
-      url_object = urllib_request.urlopen(request)
-    except urllib_error.HTTPError as exception:
-      logging.error(
-          u'Failed querying github user: {0:s} with error: {1!s}'.format(
-              username, exception))
+      response_data = self._url_lib_helper.Request(github_url)
+
+    except errors.ConnectionError as exception:
+      logging.warning(u'{0!s}'.format(exception))
       return
 
-    if url_object.code != 200:
-      logging.error(
-          u'Failed querying github user: {0:d} with status code: {1:d}'.format(
-              username, url_object.code))
-      return
-
-    response_data = url_object.read()
-    return json.loads(response_data)
+    if response_data:
+      return json.loads(response_data)

@@ -1,14 +1,26 @@
 # -*- coding: utf-8 -*-
 """Tests for the readthedocs helper."""
+
 import unittest
 
-import l2treviewtools.helpers.readthedocs as readthedocs_helper
+from l2treviewtools.helpers import readthedocs
+
+from tests.helpers import test_lib
 
 
 class ReadthedocsHelperTest(unittest.TestCase):
   """Tests the readthedocs helper"""
 
-  def testInitialize(self):
-    """Tests that the helper can be initialized."""
-    helper = readthedocs_helper.ReadTheDocsHelper(project=u'test')
-    self.assertIsNotNone(helper)
+  # pylint: disable=protected-access
+
+  def testTriggerBuild(self):
+    """Tests the TriggerBuild function."""
+    helper = readthedocs.ReadTheDocsHelper(project=u'test')
+    helper._url_lib_helper = test_lib.TestURLLibHelper()
+
+    result = helper.TriggerBuild()
+    self.assertTrue(result)
+
+
+if __name__ == '__main__':
+  unittest.main()
