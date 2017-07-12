@@ -37,19 +37,19 @@ class GitHubHelper(object):
     Returns:
       bool: True if the pull request was created.
     """
-    title = b'{0!s}: {1:s}'.format(codereview_issue_number, description)
+    title = u'{0!s}: {1:s}'.format(codereview_issue_number, description)
     body = (
-        b'[Code review: {0!s}: {1:s}]'
-        b'(https://codereview.appspot.com/{0!s}/)').format(
+        u'[Code review: {0!s}: {1:s}]'
+        u'(https://codereview.appspot.com/{0!s}/)').format(
             codereview_issue_number, description)
 
     post_data = (
-        b'{{\n'
-        b'  "title": "{0:s}",\n'
-        b'  "body": "{1:s}",\n'
-        b'  "head": "{2:s}",\n'
-        b'  "base": "master"\n'
-        b'}}\n').format(title, body, origin)
+        u'{{\n'
+        u'  "title": "{0:s}",\n'
+        u'  "body": "{1:s}",\n'
+        u'  "head": "{2:s}",\n'
+        u'  "base": "master"\n'
+        u'}}\n').format(title, body, origin)
 
     github_url = (
         u'https://api.github.com/repos/{0:s}/{1:s}/pulls?'
@@ -85,7 +85,7 @@ class GitHubHelper(object):
     Returns:
       dict[str,object]: JSON response or None.
     """
-    github_url = b'https://api.github.com/users/{0:s}'.format(username)
+    github_url = u'https://api.github.com/users/{0:s}'.format(username)
 
     try:
       response_data = self._url_lib_helper.Request(github_url)
